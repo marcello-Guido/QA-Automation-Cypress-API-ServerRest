@@ -1,0 +1,8 @@
+{
+  "usuario": {
+    "nome": "MagQA",
+    "email": "magqa@qa.com.br",
+    "password": "roque",
+    "administrador": "true"
+  }
+}
