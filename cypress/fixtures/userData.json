@@ -4,5 +4,11 @@
     "email": "magqa@qa.com.br",
     "password": "roque",
     "administrador": "true"
+  },
+  "novoUsuario": {
+    "nome": "MagQA",
+    "email": "novomagqa@qa.com.br",
+    "password": "roque",
+    "administrador": "true"
   }
 }

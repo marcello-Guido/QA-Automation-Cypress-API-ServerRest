@@ -3,11 +3,7 @@ let userID;
 
 describe('Gerencie os usuários, consulte dados para login e cadastre administrador', () => {
   it('Listar usuários cadastrados', () => {
-    cy.request({
-      method: 'GET',
-      url: 'https://serverest.dev/usuarios'
-    }).then((response) => {
-
+    cy.listarUsers().then((response) => {
       // Validações básicas da resposta
       expect(response.status).to.equal(200)
       expect(response.body).to.have.property('usuarios')
@@ -30,27 +26,15 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
   });
 
   it('Cadastrar usuário', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://serverest.dev/usuarios',
-      body: userData.usuario,
-      failOnStatusCode: false
-    }).then((response) => {
+    cy.cadastrarUsers(userData.usuario).then((response) => {
 
       if (response.status === 201) {
-        cy.log('Usuário criado com sucesso!')
         cy.expect(response.body.message).to.be.equal('Cadastro realizado com sucesso')
         userID = response.body._id //Armazena o ID para outros testes
         cy.log(`${userID}`)
       } else if (response.status === 400) {
-        cy.log('Usuário já cadastrado!')
         cy.expect(response.body.message).to.be.equal('Este email já está sendo usado')
-        userID = response.body._id //Armazena o ID para outros testes
-        cy.log(`${userID}`)
 
-      } else {
-        cy.log('🚨 Status inesperado:', response.status)
-        throw new Error(`Status inesperado: ${response.status}`)
       }
 
     })
@@ -65,29 +49,18 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
     }).then((response) => {
 
       if (response.status === 201) {
-        cy.log('Usuário criado com sucesso!')
         cy.expect(response.body.message).to.be.equal('Cadastro realizado com sucesso')
         userID = response.body._id //Armazena o ID para outros testes
         cy.log(`${userID}`)
       } else if (response.status === 400) {
-        cy.log('Usuário já cadastrado!')
         cy.expect(response.body.message).to.be.equal('Este email já está sendo usado')
-        cy.log(`${userID}`)
-
-      } else {
-        cy.log('🚨 Status inesperado:', response.status)
-        throw new Error(`Status inesperado: ${response.status}`)
       }
 
     })
   });
 
   it('Buscar usuário por ID', () => {
-    cy.request({
-      method: 'GET',
-      url: `https://serverest.dev/usuarios/${userID}`,
-    }).then((response) => {
-
+    cy.buscarUsuarioPorId(userID).then((response) => {
       if (response.status === 200) {
         expect(response.body.nome).to.be.eql(userData.usuario.nome)
         expect(response.body.email).to.be.eql(userData.usuario.email)
@@ -95,47 +68,30 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
         expect(response.body.administrador).to.be.eql(userData.usuario.administrador)
       } else if (response.status === 400) {
         expect(response.body.message).to.be.eql('Usuário não encontrado')
-
       }
     })
-
   });
 
   it('Editar usuário', () => {
-    cy.request({
-      method: 'PUT',
-      url: `https://serverest.dev/usuarios/${userID}`,
-      body: {
-        nome: "MagQA",
-        email: "magqa@qa.com.br",
-        password: "roque",
-        administrador: "true"
-      }
-    }).then((response) => {
-      if(response.status === 200){
+    cy.editarUsuario(userID, userData.novoUsuario).then((response) => {
+      if (response.status === 200) {
         expect(response.body.message).to.be.eql('Registro alterado com sucesso')
-      }else if(response.status === 201){
+      } else if (response.status === 201) {
         expect(response.body.message).to.be.eql('Cadastro realizado com sucesso')
 
-      }else if(response.status === 400){
+      } else if (response.status === 400) {
         expect(response.body.message).to.be.eql('Este email já está sendo usado')
       }
-
     })
   });
 
   it('Excluir usuário', () => {
-    cy.request({
-      method: 'DELETE',
-      url: `https://serverest.dev/usuarios/${userID}`,
-    }).then((response) => {
+    cy.excluirUsuario(userID).then((response) => {
       if (response.status === 200) {
         expect(response.body.message).to.be.eql('Registro excluído com sucesso')
       } else if (response.status === 400) {
         expect(response.body.message).to.be.eql('Não é permitido excluir usuário com carrinho cadastrado')
-
       }
-
     })
   });
 })

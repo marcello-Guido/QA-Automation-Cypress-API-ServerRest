@@ -24,3 +24,49 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+// Listar os usuários
+Cypress.Commands.add('listarUsers', () => {
+    cy.request({
+        method: 'GET',
+        url: '/usuarios'
+    })
+})
+
+
+// Cadastrar usuário
+Cypress.Commands.add('cadastrarUsers', (usuario) => {
+    cy.request({
+        method: 'POST',
+        url: '/usuarios',
+        body: usuario,
+        failOnStatusCode: false
+    })
+})
+
+// Buscar usuário por ID
+Cypress.Commands.add('buscarUsuarioPorId', (id) => {
+    cy.request({
+        method: 'GET',
+        url: `/usuarios/${id}`,
+        failOnStatusCode: false
+    })
+})
+
+// Editar usuário
+Cypress.Commands.add('editarUsuario', (id, novoUsuario) => {
+    cy.request({
+        method: 'PUT',
+        url: `/usuarios/${id}`,
+        body: novoUsuario,
+        failOnStatusCode: false
+    })
+})
+
+// Excluir usuário
+Cypress.Commands.add('excluirUsuario', (id) => {
+    cy.request({
+        method: 'DELETE',
+        url: `/usuarios/${id}`,
+        failOnStatusCode: false
+    })
+})
