@@ -70,3 +70,17 @@ Cypress.Commands.add('excluirUsuario', (id) => {
         failOnStatusCode: false
     })
 })
+
+// Login
+Cypress.Commands.add('login', (email, password) =>{
+    cy.request({
+        method: 'POST',
+        url: '/login',
+        body: {
+            email: email,
+            password: password
+        }
+
+    })
+
+})
