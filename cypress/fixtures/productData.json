@@ -1,0 +1,14 @@
+{
+    "product1": {
+        "nome": "Logitech Teclado",
+        "preco": 470,
+        "descricao": "Teclado",
+        "quantidade": 200
+    },
+    "product2": {
+        "nome": "Logitech Mouse",
+        "preco": 230,
+        "descricao": "Mouse",
+        "quantidade": 400
+    }
+}

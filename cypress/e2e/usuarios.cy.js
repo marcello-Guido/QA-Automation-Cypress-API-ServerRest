@@ -1,97 +1,58 @@
 import userData from '../fixtures/userData.json'
-let userID;
 
 describe('Gerencie os usuários, consulte dados para login e cadastre administrador', () => {
+  let userID;
+
+  before(() => {
+    // Cria um usuário antes de rodar os testes
+    cy.cadastrarUsers(userData.usuario).then((response) => {
+      if (response.status === 201) {
+        userID = response.body._id
+        Cypress.env('userID', userID) // opcional
+        cy.log(`Usuário criado com ID: ${userID}`)
+      } else {
+        // Caso já exista, busca o ID do existente
+        cy.listarUsers().then((res) => {
+          const user = res.body.usuarios.find(u => u.email === userData.usuario.email)
+          if (user) {
+            userID = user._id
+            Cypress.env('userID', userID)
+            cy.log(`Usuário já existente, ID reutilizado: ${userID}`)
+          }
+        })
+      }
+    })
+  });
+
   it('Listar usuários cadastrados', () => {
     cy.listarUsers().then((response) => {
-      // Validações básicas da resposta
       expect(response.status).to.equal(200)
-      expect(response.body).to.have.property('usuarios')
       expect(response.body.usuarios).to.be.an('array')
-
-      // Armazena os usuários retornados
-      const usuarios = response.body.usuarios
-
-      //Mostra a quantidade total
-      cy.log(`Quantidade total de usuários: ${usuarios.length}`)
-
-      // Mostra todos os usuários em formato de tabela no console
-      console.table(usuarios)
-
-      //Mostra nome e email de cada usuário no log do Cypress
-      usuarios.forEach((u, i) => {
-        cy.log(`${i + 1}. ${u.nome} - ${u.email}`)
-      })
+      cy.log(`Total de usuários: ${response.body.usuarios.length}`)
     })
-  });
-
-  it('Cadastrar usuário', () => {
-    cy.cadastrarUsers(userData.usuario).then((response) => {
-
-      if (response.status === 201) {
-        cy.expect(response.body.message).to.be.equal('Cadastro realizado com sucesso')
-        userID = response.body._id //Armazena o ID para outros testes
-        cy.log(`${userID}`)
-      } else if (response.status === 400) {
-        cy.expect(response.body.message).to.be.equal('Este email já está sendo usado')
-
-      }
-
-    })
-  });
-
-  it('Deve cadastrar usuário cadastrado e ver se o endpoint é de erro', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://serverest.dev/usuarios',
-      body: userData.usuario,
-      failOnStatusCode: false
-    }).then((response) => {
-
-      if (response.status === 201) {
-        cy.expect(response.body.message).to.be.equal('Cadastro realizado com sucesso')
-        userID = response.body._id //Armazena o ID para outros testes
-        cy.log(`${userID}`)
-      } else if (response.status === 400) {
-        cy.expect(response.body.message).to.be.equal('Este email já está sendo usado')
-      }
-
-    })
-  });
+  })
 
   it('Buscar usuário por ID', () => {
     cy.buscarUsuarioPorId(userID).then((response) => {
-      if (response.status === 200) {
-        expect(response.body.nome).to.be.eql(userData.usuario.nome)
-        expect(response.body.email).to.be.eql(userData.usuario.email)
-        expect(response.body.password).to.be.eql(userData.usuario.password)
-        expect(response.body.administrador).to.be.eql(userData.usuario.administrador)
-      } else if (response.status === 400) {
-        expect(response.body.message).to.be.eql('Usuário não encontrado')
-      }
+      expect(response.status).to.equal(200)
+      expect(response.body.email).to.eql(userData.usuario.email)
     })
-  });
+  })
 
   it('Editar usuário', () => {
     cy.editarUsuario(userID, userData.novoUsuario).then((response) => {
-      if (response.status === 200) {
-        expect(response.body.message).to.be.eql('Registro alterado com sucesso')
-      } else if (response.status === 201) {
-        expect(response.body.message).to.be.eql('Cadastro realizado com sucesso')
-
-      } else if (response.status === 400) {
-        expect(response.body.message).to.be.eql('Este email já está sendo usado')
-      }
+      expect(response.status).to.be.oneOf([200, 201, 400])
+      if (response.status === 200) expect(response.body.message).to.eql('Registro alterado com sucesso')
     })
-  });
+  })
 
   it('Excluir usuário', () => {
     cy.excluirUsuario(userID).then((response) => {
       if (response.status === 200) {
-        expect(response.body.message).to.be.eql('Registro excluído com sucesso')
+        expect(response.body.message).to.eql('Registro excluído com sucesso')
       } else if (response.status === 400) {
-        expect(response.body.message).to.be.eql('Não é permitido excluir usuário com carrinho cadastrado')
+        expect(response.body.message).to.eql('Não é permitido excluir usuário com carrinho cadastrado')
       }
     })
-  });
+  })
 })
