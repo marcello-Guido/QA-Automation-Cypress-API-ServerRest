@@ -34,7 +34,6 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
 
   it('Buscar usuário por ID', () => {
     cy.buscarUsuarioPorId(userID).then((response) => {
-<<<<<<< HEAD
       if (response.status === 200) {
         expect(response.body.nome).to.be.equal(userData.usuario.nome)
         expect(response.body.email).to.be.equal(userData.usuario.email)
@@ -43,16 +42,14 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
       } else if (response.status === 400) {
         expect(response.body.message).to.be.equal('Usuário não encontrado')
       }
-=======
+
       expect(response.status).to.equal(200)
       expect(response.body.email).to.eql(userData.usuario.email)
->>>>>>> 8d0b8ea6ab85bcc22480e2ea1d3950f6b1c99ff0
     })
   })
 
   it('Editar usuário', () => {
     cy.editarUsuario(userID, userData.novoUsuario).then((response) => {
-<<<<<<< HEAD
       if (response.status === 200) {
         expect(response.body.message).to.be.equal('Registro alterado com sucesso')
       } else if (response.status === 201) {
@@ -61,25 +58,21 @@ describe('Gerencie os usuários, consulte dados para login e cadastre administra
       } else if (response.status === 400) {
         expect(response.body.message).to.be.equal('Este email já está sendo usado')
       }
-=======
+
       expect(response.status).to.be.oneOf([200, 201, 400])
       if (response.status === 200) expect(response.body.message).to.eql('Registro alterado com sucesso')
->>>>>>> 8d0b8ea6ab85bcc22480e2ea1d3950f6b1c99ff0
     })
   })
 
   it('Excluir usuário', () => {
     cy.excluirUsuario(userID).then((response) => {
       if (response.status === 200) {
-<<<<<<< HEAD
         expect(response.body.message).to.be.equal('Registro excluído com sucesso')
       } else if (response.status === 400) {
         expect(response.body.message).to.be.equal('Não é permitido excluir usuário com carrinho cadastrado')
-=======
         expect(response.body.message).to.eql('Registro excluído com sucesso')
       } else if (response.status === 400) {
         expect(response.body.message).to.eql('Não é permitido excluir usuário com carrinho cadastrado')
->>>>>>> 8d0b8ea6ab85bcc22480e2ea1d3950f6b1c99ff0
       }
     })
   })
