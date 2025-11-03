@@ -1,14 +1,20 @@
 {
   "usuario": {
-    "nome": "MagQA",
-    "email": "magqa@qa.com.br",
+    "nome": "MagQA2",
+    "email": "magqa2@qa.com.br",
     "password": "roque",
     "administrador": "true"
   },
   "novoUsuario": {
-    "nome": "MagQA",
-    "email": "novomagqa@qa.com.br",
+    "nome": "MagQA2",
+    "email": "novomagqa22@qa.com.br",
     "password": "roque",
+    "administrador": "true"
+  },
+  "loginUser": {
+    "nome": "Fulano Gui",
+    "email": "fulanogui@qa.com.br",
+    "password": "test123",
     "administrador": "true"
   }
 }
