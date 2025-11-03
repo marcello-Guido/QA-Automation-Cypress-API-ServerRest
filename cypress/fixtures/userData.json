@@ -1,25 +1,20 @@
 {
   "usuario": {
-<<<<<<< HEAD
     "nome": "MagQA2",
     "email": "magqa2@qa.com.br",
-=======
     "nome": "Magot",
     "email": "magot@qa.com.br",
->>>>>>> 8d0b8ea6ab85bcc22480e2ea1d3950f6b1c99ff0
     "password": "roque",
     "administrador": "true"
   },
   "novoUsuario": {
-<<<<<<< HEAD
     "nome": "MagQA2",
     "email": "novomagqa22@qa.com.br",
     "password": "roque",
-=======
+
     "nome": "Magot",
     "email": "magot@qa.com.br",
     "password": "roque123",
->>>>>>> 8d0b8ea6ab85bcc22480e2ea1d3950f6b1c99ff0
     "administrador": "true"
   },
   "loginUser": {
