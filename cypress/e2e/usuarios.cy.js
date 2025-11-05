@@ -1,7 +1,9 @@
 import userData from '../fixtures/userData.json'
 
+
 describe('Gerencie os usuários, consulte dados para login e cadastre administrador', () => {
   let userID;
+
 
   before(() => {
     // Cria um usuário antes de rodar os testes

@@ -1,26 +1,20 @@
 {
   "usuario": {
-    "nome": "MagQA2",
-    "email": "magqa2@qa.com.br",
-    "nome": "Magot",
-    "email": "magot@qa.com.br",
+    "nome": "Usuario",
+    "email": "usuario@qa.com.br",
     "password": "roque",
     "administrador": "true"
   },
   "novoUsuario": {
-    "nome": "MagQA2",
-    "email": "novomagqa22@qa.com.br",
-    "password": "roque",
-
-    "nome": "Magot",
-    "email": "magot@qa.com.br",
-    "password": "roque123",
+    "nome": "Alterado",
+    "email": "alterado@qa.com.br",
+    "password": "alterado123",
     "administrador": "true"
   },
   "loginUser": {
-    "nome": "Fulano Gui",
-    "email": "fulanogui@qa.com.br",
-    "password": "test123",
+    "nome": "aloieta",
+    "email": "aloeei@qa.com.br",
+    "password": "teste123",
     "administrador": "true"
   }
 }

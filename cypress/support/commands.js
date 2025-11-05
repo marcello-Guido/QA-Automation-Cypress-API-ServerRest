@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+
 // Listar os usuários
 Cypress.Commands.add('listarUsers', () => {
     cy.request({

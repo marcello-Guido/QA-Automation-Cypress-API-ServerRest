@@ -10,5 +10,17 @@
         "preco": 230,
         "descricao": "Mouse",
         "quantidade": 400
+    },
+    "product3": {
+        "nome": "Logitech Fone",
+        "preco": 830,
+        "descricao": "Fone",
+        "quantidade": 200
+    },
+    "product4": {
+        "nome": "Logitech Tela",
+        "preco": 8130,
+        "descricao": "Tela",
+        "quantidade": 20
     }
 }
